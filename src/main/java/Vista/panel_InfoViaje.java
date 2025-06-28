@@ -41,6 +41,8 @@ public class panel_InfoViaje extends javax.swing.JPanel {
         this.controlador = controlador;
         this.tabla = tabla;
         
+        dateViaje.getComponentDateTextField().setEnabled(false);
+        timeViaje.getComponentTimeTextField().setEnabled(false);
         visibilidadComponentes_GuardarChofer(true);
         cambiarFormatoFecha();
         crearComboRuta();
@@ -57,6 +59,8 @@ public class panel_InfoViaje extends javax.swing.JPanel {
         this.viaje = viaje;
         this.fila = fila;
         
+        dateViaje.getComponentDateTextField().setEnabled(false);
+        timeViaje.getComponentTimeTextField().setEnabled(false);
         visibilidadComponentes_GuardarChofer(false);
         cambiarFormatoFecha();
         crearComboRuta();

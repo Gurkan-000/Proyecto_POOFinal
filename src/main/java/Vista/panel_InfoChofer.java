@@ -35,6 +35,7 @@ public class panel_InfoChofer extends JPanel {
         this.controlador = controlador;
         this.tabla = tabla;
         
+        dateChofer.getComponentDateTextField().setEnabled(false);
         visibilidadComponentes_GuardarChofer(true);
         cambiarFormatoFecha();
     }
@@ -47,7 +48,7 @@ public class panel_InfoChofer extends JPanel {
         this.tabla = tabla;
         this.fila = fila;
         
-        
+        dateChofer.getComponentDateTextField().setEnabled(false);
         visibilidadComponentes_GuardarChofer(false);
         
         cambiarFormatoFecha();
