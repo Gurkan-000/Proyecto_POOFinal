@@ -298,22 +298,4 @@ commit;
 end //
 delimiter ;
 
-delimiter //
-create procedure sp_actualizarBoleto(in p_idBoleto int,in p_nombrePasj varchar(40),in p_tipoPasj varchar(40),in p_idAsiento int,in p_idViaje int,in p_coste decimal(6,2))
-begin
-declare ocupado int default 0;
-declare asientoAnterior int;
-start transaction;
-select idAsiento into asientoAnterior from Boletos where idBoleto=p_idBoleto;
-select count(*) into ocupado from AsientosPorViaje where idAsiento=p_idAsiento and idViaje=p_idViaje and idAsiento != asientoAnterior;
-if ocupado>0 then
-rollback;
-signal sqlstate '45000' set message_text = 'El asiento ya está ocupado';
-else 
-update Boletos set nombrePasj=p_nombrePasj,tipoPasj=p_tipoPasj,idAsiento=p_idAsiento,idViaje=p_idViaje,coste=p_coste where idBoleto=p_idBoleto;
-delete from AsientosPorViaje where idAsiento=asientoAnterior and idViaje=p_idViaje;
-insert into AsientosPorViaje values(p_idAsiento,p_idViaje);
-commit;
-end if;
-end //
-delimiter ;
+

@@ -11,8 +11,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class FechasHora {
     
-    private static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+
     
     public static String parseString(LocalDate fecha){
         
