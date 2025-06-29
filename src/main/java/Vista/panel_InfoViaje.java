@@ -320,6 +320,7 @@ public class panel_InfoViaje extends javax.swing.JPanel {
             viaje.setHora(String.valueOf(timeViaje.getTime()));
             viaje.setRuta((Ruta)cbRuta.getSelectedItem());
             viaje.setBus(bus);
+            viaje.setAsientosDispo(20);
             
             if(controlador.cViaje.insertarViaje(viaje)){
                 controlador.cViaje.insertarMapViaje(viaje);
