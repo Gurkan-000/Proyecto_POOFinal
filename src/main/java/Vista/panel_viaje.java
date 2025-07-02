@@ -184,7 +184,6 @@ public class panel_viaje extends JPanel {
     }//GEN-LAST:event_bttViajeActionPerformed
 
     private void bttEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarActionPerformed
-
         if(viajeBuscado.getAsientosDispo() == 20){
             controlador.cViaje.eliminarViaje(viajeBuscado.getIdViaje());
             controlador.cViaje.eliminarMapViaje(viajeBuscado.getIdViaje());
