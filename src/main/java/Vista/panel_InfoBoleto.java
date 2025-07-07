@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -45,7 +46,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     public panel_InfoBoleto(C_Controlador controlador,JTable tabla) {
         initComponents();
         generarBotonesAsiento();
-        ponerImagen(bttFlecha,"Flecha_de_tu_vieja");
+        ponerImagen(bttFlecha,"Flecha_de_tu_vieja",40,20);
         
         this.controlador = controlador;
         this.tabla = tabla;
@@ -60,7 +61,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     public panel_InfoBoleto(C_Controlador controlador,JTable tabla,Boleto boleto,int fila) {
         initComponents();
         generarBotonesAsiento();
-        ponerImagen(bttFlecha,"Flecha_de_tu_vieja");
+        ponerImagen(bttFlecha,"Flecha_de_tu_vieja",40,20);
         
         this.controlador = controlador;
         this.tabla = tabla;
@@ -74,10 +75,16 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         llenarCampos();
     }
     
-    private void ponerImagen(JButton boton, String URL){
+    private void ponerImagen(JButton boton, String URL,int ancho, int altura){
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Imagenes/"+URL+".png"));
-        Image image = imageIcon.getImage().getScaledInstance(40,20,Image.SCALE_SMOOTH);
+        Image image = imageIcon.getImage().getScaledInstance(ancho,altura,Image.SCALE_SMOOTH);
         boton.setIcon(new ImageIcon(image));
+    }
+    
+    private void ponerImagen(JLabel label, String URL,int ancho, int altura){
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Imagenes/"+URL+".png"));
+        Image image = imageIcon.getImage().getScaledInstance(ancho,altura,Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(image));
     }
     
     private void llenarCampos(){
@@ -148,7 +155,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         panel_asiento = new javax.swing.JPanel();
         Salida = new javax.swing.JLabel();
         Chofer = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        label_ReferenciaRuta = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_ViajeAsiento = new javax.swing.JTable();
         label_CreaBoleto = new javax.swing.JLabel();
@@ -163,6 +170,8 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         cbTipoPasajero = new javax.swing.JComboBox<>();
         label_ID = new javax.swing.JLabel();
         bttActualizar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        Imagen_RutaRef = new javax.swing.JLabel();
 
         Panel_Principal.setBackground(new java.awt.Color(255, 255, 255));
         Panel_Principal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -188,10 +197,10 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
 
         Panel_Principal.add(panel_asiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 239, 290));
 
-        jLabel3.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Selecciona tu ruta    :");
-        Panel_Principal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
+        label_ReferenciaRuta.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        label_ReferenciaRuta.setForeground(new java.awt.Color(102, 102, 102));
+        label_ReferenciaRuta.setText("Referencia de ruta  :");
+        Panel_Principal.add(label_ReferenciaRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
 
         tabla_ViajeAsiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -223,7 +232,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         });
         jScrollPane1.setViewportView(tabla_ViajeAsiento);
 
-        Panel_Principal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 370, 250));
+        Panel_Principal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 370, 100));
 
         label_CreaBoleto.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         label_CreaBoleto.setForeground(new java.awt.Color(153, 153, 153));
@@ -310,6 +319,12 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
             }
         });
         Panel_Principal.add(bttActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 100, 30));
+
+        jLabel4.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("Selecciona tu ruta    :");
+        Panel_Principal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
+        Panel_Principal.add(Imagen_RutaRef, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 190, 120));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -410,11 +425,16 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     }//GEN-LAST:event_bttActualizarActionPerformed
 
     private void ItemcbRuta(ItemEvent e){
+        
         if(cbRuta.getSelectedIndex()>0){
             controlador.cViaje.llenarTablaViajeRuta(tabla_ViajeAsiento, String.valueOf(cbRuta.getSelectedItem()));
+            ponerImagen(Imagen_RutaRef,String.valueOf(cbRuta.getSelectedItem()),190,120);
+            label_ReferenciaRuta.setVisible(true);
         }else{
             DefaultTableModel dt = (DefaultTableModel)tabla_ViajeAsiento.getModel();
             dt.setRowCount(0);
+            Imagen_RutaRef.setIcon(null);
+            label_ReferenciaRuta.setVisible(false);
         }
         controlador.cBoleto.habilitarAsientos(asientos, false);
     }
@@ -466,6 +486,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Chofer;
+    private javax.swing.JLabel Imagen_RutaRef;
     private javax.swing.JPanel Panel_Principal;
     private javax.swing.JLabel Salida;
     private javax.swing.JButton bttActualizar;
@@ -474,10 +495,11 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     private javax.swing.JComboBox<String> cbTipoPasajero;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_CreaBoleto;
     private javax.swing.JLabel label_ID;
+    private javax.swing.JLabel label_ReferenciaRuta;
     private javax.swing.JLabel label_boleto;
     private javax.swing.JPanel panel_asiento;
     private javax.swing.JPanel panel_barra;
