@@ -10,9 +10,11 @@ import Controlador.*;
 import Modelo.AsientosViaje;
 import Modelo.Boleto;
 import Modelo.Viaje;
+import Modelo.Ruta;
 import java.awt.Color;
 
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -54,6 +56,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         controlador.cBoleto.llenarListAsientoViaje();
         controlador.cBoleto.habilitarAsientos(asientos, false);
         visibilidadComponentes_GuardarChofer(true);
+        habilitarComponentesInfoRuta(false);
         
         crearComboRuta();
     }
@@ -71,6 +74,8 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         controlador.cBoleto.llenarListAsientoViaje();
         controlador.cBoleto.habilitarAsientos(asientos, false);
         visibilidadComponentes_GuardarChofer(false);
+        habilitarComponentesInfoRuta(false);
+        
         crearComboRuta();
         llenarCampos();
     }
@@ -172,6 +177,8 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         bttActualizar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         Imagen_RutaRef = new javax.swing.JLabel();
+        label_CostoInicial = new javax.swing.JLabel();
+        txtCostoInicial = new javax.swing.JTextField();
 
         Panel_Principal.setBackground(new java.awt.Color(255, 255, 255));
         Panel_Principal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -199,7 +206,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
 
         label_ReferenciaRuta.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
         label_ReferenciaRuta.setForeground(new java.awt.Color(102, 102, 102));
-        label_ReferenciaRuta.setText("Referencia de ruta  :");
+        label_ReferenciaRuta.setText("Referencia de la ruta  :");
         Panel_Principal.add(label_ReferenciaRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
 
         tabla_ViajeAsiento.setModel(new javax.swing.table.DefaultTableModel(
@@ -324,7 +331,15 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Selecciona tu ruta    :");
         Panel_Principal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
-        Panel_Principal.add(Imagen_RutaRef, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 190, 120));
+        Panel_Principal.add(Imagen_RutaRef, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 190, 120));
+
+        label_CostoInicial.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        label_CostoInicial.setForeground(new java.awt.Color(102, 102, 102));
+        label_CostoInicial.setText("Costo inicial :");
+        Panel_Principal.add(label_CostoInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, 30));
+
+        txtCostoInicial.setEnabled(false);
+        Panel_Principal.add(txtCostoInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, 120, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -334,7 +349,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Panel_Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+            .addComponent(Panel_Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -370,14 +385,20 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
             asientoViaje.setIDViaje(viaje.getIdViaje());
             asientoViaje.setIDAsiento(NumAsiento);
             
-            if(controlador.cBoleto.insertarBoleto(boleto)){
+            Window window = SwingUtilities.getWindowAncestor(this);
+            Vista_Boleto vista_boleto = new Vista_Boleto(window,boleto);
+            vista_boleto.setLocationRelativeTo(this);
+            vista_boleto.setVisible(true);
+            
+            if(vista_boleto.getComprar() && controlador.cBoleto.insertarBoleto(boleto)){
                 controlador.cBoleto.insertarMapBoleto(boleto);  
                 controlador.cBoleto.insertarListAsientoViaje(asientoViaje);
                 controlador.cBoleto.insertarTabla(tabla, boleto);
                 controlador.cViaje.buscarViaje(viaje.getIdViaje()).setAsientosDispo(viaje.getAsientosDispo()-1);
+                
+                ((JDialog)SwingUtilities.getWindowAncestor(this)).setVisible(false);
             }
-            ((JDialog)SwingUtilities.getWindowAncestor(this)).setVisible(false);
-            
+
         }else{
             JOptionPane.showMessageDialog(this, errores,"Campos invalidos",JOptionPane.ERROR_MESSAGE);
             controlador.cBoleto.habilitarAsientos(asientos, false);
@@ -399,7 +420,12 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
             asientoViaje.setIDViaje(viaje.getIdViaje());
             asientoViaje.setIDAsiento(NumAsiento);
             
-            if(controlador.cBoleto.actualizarBoleto(boleto)){
+            Window window = SwingUtilities.getWindowAncestor(this);
+            Vista_Boleto vista_boleto = new Vista_Boleto(window,boleto);
+            vista_boleto.setLocationRelativeTo(this);
+            vista_boleto.setVisible(true);
+            
+            if(vista_boleto.getComprar() && controlador.cBoleto.actualizarBoleto(boleto)){
                 tabla.setValueAt(boleto.getIdBoleto(), fila, 0);
                 tabla.setValueAt(boleto.getNombre(), fila, 1);
                 tabla.setValueAt(boleto.getIdAsiento(), fila, 2);
@@ -414,27 +440,39 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
                     controlador.cViaje.buscarViaje(viajeAnterior.getIdViaje()).setAsientosDispo(viajeAnterior.getAsientosDispo()+1);
                 }
                 
+                ((JDialog)SwingUtilities.getWindowAncestor(this)).setVisible(false);
             }
             
-            ((JDialog)SwingUtilities.getWindowAncestor(this)).setVisible(false);
             
         }else{
             JOptionPane.showMessageDialog(this, errores,"Campos invalidos",JOptionPane.ERROR_MESSAGE);
             controlador.cBoleto.habilitarAsientos(asientos, false);
         }
     }//GEN-LAST:event_bttActualizarActionPerformed
-
+    
+    private void habilitarComponentesInfoRuta(boolean val){
+        label_ReferenciaRuta.setVisible(val);
+        label_CostoInicial.setVisible(val);
+        txtCostoInicial.setVisible(val);
+    }
+    
     private void ItemcbRuta(ItemEvent e){
         
         if(cbRuta.getSelectedIndex()>0){
+            
             controlador.cViaje.llenarTablaViajeRuta(tabla_ViajeAsiento, String.valueOf(cbRuta.getSelectedItem()));
             ponerImagen(Imagen_RutaRef,String.valueOf(cbRuta.getSelectedItem()),190,120);
-            label_ReferenciaRuta.setVisible(true);
+            
+            habilitarComponentesInfoRuta(true);
+
+            Ruta rutaCombo = (Ruta)cbRuta.getSelectedItem();
+            txtCostoInicial.setText("S/. "+rutaCombo.getCoste());
+            
         }else{
             DefaultTableModel dt = (DefaultTableModel)tabla_ViajeAsiento.getModel();
             dt.setRowCount(0);
-            Imagen_RutaRef.setIcon(null);
-            label_ReferenciaRuta.setVisible(false);
+            Imagen_RutaRef.setIcon(null);  
+            habilitarComponentesInfoRuta(false);
         }
         controlador.cBoleto.habilitarAsientos(asientos, false);
     }
@@ -497,6 +535,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label_CostoInicial;
     private javax.swing.JLabel label_CreaBoleto;
     private javax.swing.JLabel label_ID;
     private javax.swing.JLabel label_ReferenciaRuta;
@@ -504,6 +543,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     private javax.swing.JPanel panel_asiento;
     private javax.swing.JPanel panel_barra;
     private javax.swing.JTable tabla_ViajeAsiento;
+    private javax.swing.JTextField txtCostoInicial;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtPasajero;
     // End of variables declaration//GEN-END:variables

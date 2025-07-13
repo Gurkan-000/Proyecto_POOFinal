@@ -12,7 +12,7 @@ public class Boleto {
     private String nombre;
     private int idAsiento;
     private Viaje viaje;
-    private int indice; // 0 = adulto, 1 = niño, 2 = estudiante
+    private int indice; // 0 = Niño, 1 = Estudiante, 2 = Adulto
 
     private String[] tipos = {"Niño", "Estudiante", "Adulto"};
     private double[] costes = {0.5, 0.7, 1};
@@ -69,7 +69,7 @@ public class Boleto {
     
     public void setIndice(String tipo){
         
-        this.indice = (tipo.toLowerCase().equals("adulto"))? 0 : ((tipo.toLowerCase().equals("ñiño"))? 1 : 2);
+        this.indice = (tipo.toLowerCase().equals("adulto"))? 2 : ((tipo.toLowerCase().equals("ñiño"))? 0 : 1);
     }
     
     public double costeBoleto(){
