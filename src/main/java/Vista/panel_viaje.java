@@ -275,7 +275,7 @@ public class panel_viaje extends JPanel {
         setLocation(xScreen - x, yScreen - y);
     }
     
-    
+    //prueba
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
