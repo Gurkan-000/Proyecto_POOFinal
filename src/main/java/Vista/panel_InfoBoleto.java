@@ -355,7 +355,7 @@ public class panel_InfoBoleto extends JPanel implements ActionListener{
     
     private boolean camposValidos(){
         errores = new StringBuilder();
-        if(!txtPasajero.getText().trim().matches("^([A-Z][a-z]+)(\\s[A-Z][a-z]+)*$")||txtPasajero.getText().isEmpty()){
+        if(!txtPasajero.getText().trim().matches("^([A-Z][a-záéíóúñ]+)(\\s[A-Z][a-zñáéíóú]+)*$")||txtPasajero.getText().isEmpty()){                       
             errores.append("El campo de nombre es invalido o esta vacio\n");
             txtPasajero.setText("");
         }

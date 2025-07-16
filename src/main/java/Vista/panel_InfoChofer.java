@@ -253,7 +253,7 @@ public class panel_InfoChofer extends JPanel {
     
     private boolean camposValidos(){
         errores = new StringBuilder();
-        if(!txtNombre.getText().trim().matches("^([A-Z][a-z]+)(\\s[A-Z][a-z]+)?$")||txtNombre.getText().isEmpty()){
+        if(!txtNombre.getText().trim().matches("^([A-Z][a-záéíóúñ]+)(\\s[A-Z][a-zñáéíóú]+)*$")||txtNombre.getText().isEmpty()){
             errores.append("El campo de nombre es invalido o esta vacio\n");
         }
         if(buttonGroup1.getSelection() == null){
