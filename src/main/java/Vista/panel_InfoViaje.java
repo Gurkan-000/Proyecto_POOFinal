@@ -6,6 +6,7 @@ import Controlador.C_Controlador;
 import Modelo.Bus;
 import Modelo.Ruta;
 import Modelo.Viaje;
+import Util.FechasHora;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
@@ -351,12 +352,12 @@ public class panel_InfoViaje extends javax.swing.JPanel {
             viaje.setRuta((Ruta)cbRuta.getSelectedItem());
             viaje.setBus(bus);
             
-            //Cabro el que lo lea
+            
             if(controlador.cViaje.actualizarViaje(viaje)){
                 tabla.setValueAt(viaje.getIdViaje(), fila, 0);
-                tabla.setValueAt(viaje.getFecha(), fila, 1);
-                tabla.setValueAt(viaje.getHora(), fila, 2);
-                tabla.setValueAt(viaje.getRuta(), fila, 3);
+                tabla.setValueAt(viaje.getRuta(), fila, 1);
+                tabla.setValueAt(viaje.getFecha(), fila, 2);
+                tabla.setValueAt(FechasHora.parseHora(viaje.getHora()), fila, 3);
                 controlador.cViaje.insertarMapViaje(viaje); // el metodo put que contiene ese insertarViaje tambien actualiza ese valor en el Hash
             }
 

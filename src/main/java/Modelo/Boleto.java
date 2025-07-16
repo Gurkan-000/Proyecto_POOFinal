@@ -69,7 +69,7 @@ public class Boleto {
     
     public void setIndice(String tipo){
         
-        this.indice = (tipo.toLowerCase().equals("adulto"))? 2 : ((tipo.toLowerCase().equals("ñiño"))? 0 : 1);
+        this.indice = (tipo.toLowerCase().equals("adulto"))? 2 : ((tipo.toLowerCase().equals("niño"))? 0 : 1);
     }
     
     public double costeBoleto(){

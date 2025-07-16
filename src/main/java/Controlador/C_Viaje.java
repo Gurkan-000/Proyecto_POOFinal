@@ -195,7 +195,7 @@ public class C_Viaje {
         Object [] datos = {viaje.getIdViaje(),
                            viaje.getRuta().getNombre(),
                            viaje.getFecha(),
-                           viaje.getHora()};
+                           FechasHora.parseHora(viaje.getHora())};
         dt.addRow(datos);        
     }
     
