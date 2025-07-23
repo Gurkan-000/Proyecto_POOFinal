@@ -9,7 +9,7 @@ public class Conexion {
     
     private final String URL="jdbc:mysql://localhost:3306/bddAgenciaViajes";
     private final String Usuario="root";
-    private final String Contraseña="hololive"; 
+    private final String Contraseña="P3p3*12"; 
     
     private Connection connection = null;
     

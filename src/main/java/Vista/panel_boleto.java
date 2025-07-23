@@ -5,6 +5,7 @@ import Controlador.*;
 import Modelo.Boleto;
 
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -69,6 +70,7 @@ public class panel_boleto extends JPanel {
         bttEditar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_Boleto = new javax.swing.JTable();
+        bttConsulta = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -149,6 +151,19 @@ public class panel_boleto extends JPanel {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 390, 300));
 
+        bttConsulta.setBackground(new java.awt.Color(53, 93, 127));
+        bttConsulta.setFont(new java.awt.Font("MS UI Gothic", 1, 15)); // NOI18N
+        bttConsulta.setForeground(new java.awt.Color(255, 255, 255));
+        bttConsulta.setText("Consulta");
+        bttConsulta.setBorderPainted(false);
+        bttConsulta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bttConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttConsultaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bttConsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, 130, 40));
+
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 490));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -184,6 +199,13 @@ public class panel_boleto extends JPanel {
             visibilidadBotonEditarEliminar(true);
         }
     }//GEN-LAST:event_tabla_BoletoMousePressed
+
+    private void bttConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttConsultaActionPerformed
+        Window window = SwingUtilities.getWindowAncestor(this);
+        panel_consultaBoleto consultaBoleto = new panel_consultaBoleto(window, controlador);
+        consultaBoleto.setLocationRelativeTo(this);
+        consultaBoleto.setVisible(true);
+    }//GEN-LAST:event_bttConsultaActionPerformed
 
     private class FrameDialogo extends JDialog {
         
@@ -241,6 +263,7 @@ public class panel_boleto extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bttBoleto;
+    private javax.swing.JButton bttConsulta;
     private javax.swing.JButton bttEditar;
     private javax.swing.JButton bttEliminar;
     private javax.swing.JLabel foto_boleto;

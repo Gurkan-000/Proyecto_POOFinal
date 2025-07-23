@@ -5,37 +5,20 @@ package Vista;
  *
  * @author RODRIGO
  */
-
-
-
-import javax.swing.JDialog;
 import Modelo.Boleto;
 import Util.FechasHora;
 import java.awt.Image;
-import java.awt.Window;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
+public class panel_BoletoID extends JPanel {
 
-public class Vista_Boleto extends JDialog {
+    private Boleto boleto;
     
-    private boolean comprar;
-    
-    public Vista_Boleto(Window parent,Boleto boleto) {
-        super(parent,"", ModalityType.APPLICATION_MODAL);
+    public panel_BoletoID() {
         initComponents();
-        
         ponerImagen(Logo_Empresa, "bus_logo", 40, 29);
-        llenarBoleto(boleto);
-    }
-    
-    private void llenarBoleto(Boleto boleto){
-        Nombre.setText(boleto.getNombre());
-        Tipo.setText(boleto.getTipo());
-        Ruta.setText(boleto.getViaje().getRuta().getNombre());
-        FechaHora.setText(boleto.getViaje().getFecha()+", "+FechasHora.parseHora(boleto.getViaje().getHora()));
-        Asiento.setText(String.valueOf(boleto.getIdAsiento()));
-        label_MontoFinal.setText("S/."+boleto.costeBoleto());
     }
 
     private void ponerImagen(JLabel label, String URL,int ancho, int altura){
@@ -44,12 +27,16 @@ public class Vista_Boleto extends JDialog {
         label.setIcon(new ImageIcon(image));
     }
     
-    public boolean getComprar() {
-        return comprar;
+    public void setBoleto(Boleto boleto){
+        this.boleto = boleto;
     }
-
-    public void setComprar(boolean comprar) {
-        this.comprar = comprar;
+    
+    public void llenarInformacion(){
+        Nombre.setText(boleto.getNombre());
+        Tipo.setText(boleto.getTipo());
+        Ruta.setText(boleto.getViaje().getRuta().getNombre());
+        FechaHora.setText(boleto.getViaje().getFecha()+", "+FechasHora.parseHora(boleto.getViaje().getHora()));
+        Asiento.setText(""+boleto.getIdAsiento());
     }
     
     @SuppressWarnings("unchecked")
@@ -70,14 +57,7 @@ public class Vista_Boleto extends JDialog {
         Tipo = new javax.swing.JLabel();
         Ruta = new javax.swing.JLabel();
         FechaHora = new javax.swing.JLabel();
-        Editar = new javax.swing.JButton();
-        bttComprar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         label_MontoFinal = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setUndecorated(true);
 
         Boleto.setBackground(new java.awt.Color(255, 255, 255));
         Boleto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -146,40 +126,12 @@ public class Vista_Boleto extends JDialog {
         FechaHora.setForeground(new java.awt.Color(153, 153, 153));
         Boleto.add(FechaHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 140, 20));
 
-        Editar.setBackground(new java.awt.Color(53, 93, 127));
-        Editar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Editar.setForeground(new java.awt.Color(255, 255, 255));
-        Editar.setText("Editar");
-        Editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditarActionPerformed(evt);
-            }
-        });
-        Boleto.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 90, -1));
-
-        bttComprar.setBackground(new java.awt.Color(53, 93, 127));
-        bttComprar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        bttComprar.setForeground(new java.awt.Color(255, 255, 255));
-        bttComprar.setText("Comprar");
-        bttComprar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttComprarActionPerformed(evt);
-            }
-        });
-        Boleto.add(bttComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 90, -1));
-        Boleto.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 460, 10));
-
         label_MontoFinal.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
         label_MontoFinal.setForeground(new java.awt.Color(102, 102, 102));
         Boleto.add(label_MontoFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 90, 20));
 
-        jLabel8.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel8.setText("Costo final :");
-        Boleto.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 90, 20));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -188,45 +140,26 @@ public class Vista_Boleto extends JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Boleto, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(Boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bttComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttComprarActionPerformed
-
-        comprar = true;
-        this.dispose();
-        
-    }//GEN-LAST:event_bttComprarActionPerformed
-
-    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        
-        comprar = false;
-        this.dispose();
-        
-    }//GEN-LAST:event_EditarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Asiento;
     private javax.swing.JPanel Barra_Superior;
     private javax.swing.JPanel Boleto;
-    private javax.swing.JButton Editar;
     private javax.swing.JLabel FechaHora;
     private javax.swing.JLabel Logo_Empresa;
     private javax.swing.JLabel Nombre;
     private javax.swing.JLabel Ruta;
     private javax.swing.JLabel Tipo;
-    private javax.swing.JButton bttComprar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel label_MontoFinal;
     // End of variables declaration//GEN-END:variables
 }
